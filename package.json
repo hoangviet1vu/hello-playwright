@@ -1,0 +1,27 @@
+{
+  "name": "playwright-saas",
+  "version": "1.0.0",
+  "description": "Playwright E2E tests — SaaS BPF full CIID OAuth flow",
+  "type": "module",
+  "main": "index.js",
+   "scripts": {
+    "test":              "playwright test",
+    "test:headed":       "playwright test --headed",
+    "test:ui":           "playwright test --ui",
+    "test:debug":        "playwright test --debug",
+    "test:step1":        "playwright test --grep 'Step 1'",
+    "test:step2":        "playwright test --grep 'Step 2'",
+    "test:e2e":          "playwright test --grep 'Full flow'",
+    "report":            "playwright show-report",
+    "install:browsers":  "playwright install --with-deps chromium firefox"
+  },
+  "keywords": [],
+  "author": "Vu Hoang Viet",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0",
+    "dotenv":           "^16.4.5"
+  }
+}
