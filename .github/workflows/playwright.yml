@@ -12,6 +12,9 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.58.0-noble
       options: --user 1001
+      env:
+        CIID_USERNAME: ${{ secrets.CIID_USERNAME }}
+        CIID_PASSWORD: ${{ secrets.CIID_PASSWORD }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
