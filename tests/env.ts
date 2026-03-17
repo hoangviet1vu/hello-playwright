@@ -17,4 +17,5 @@ export const ENV = {
   CIID_PASSWORD: () => requireEnv('CIID_PASSWORD'),
   BASE_URL:      () => process.env['BASE_URL'] ?? 'https://saasbpf.saas-dev.mira-pco.net',
   IDP_BASE_URL:  () => process.env['IDP_BASE_URL'] ?? 'https://dev001.integrated-id.jpn.panasonic.com',
+  EC_URL:        () => process.env['EC_URL'] ?? 'https://api.saasbpf.saas-dev.mira-pco.net',
 };
