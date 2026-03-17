@@ -92,3 +92,7 @@ active and handles both automatically.
 The login button label is currently rendered in Japanese (`ログイン`). All
 locators and text assertions use regexes that accept both the English and
 Japanese label so the tests remain stable regardless of locale.
+
+**Summary**
+
+T.B.D
