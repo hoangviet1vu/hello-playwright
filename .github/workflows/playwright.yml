@@ -1,5 +1,6 @@
 name: Playwright Tests
 on:
+  workflow_dispatch:
   push:
     branches: [ main, master ]
   pull_request:
@@ -8,6 +9,13 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: test
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.0-noble
+      options: --user 1001
+      env:
+        CIID_USERNAME: ${{ secrets.CIID_USERNAME }}
+        CIID_PASSWORD: ${{ secrets.CIID_PASSWORD }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -15,9 +23,10 @@ jobs:
         node-version: lts/*
     - name: Install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
     - name: Run Playwright tests
+      env:
+        CIID_USERNAME: ${{ secrets.CIID_USERNAME }}
+        CIID_PASSWORD: ${{ secrets.CIID_PASSWORD }}
       run: npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}

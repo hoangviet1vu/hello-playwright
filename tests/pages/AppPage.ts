@@ -1,4 +1,15 @@
 import { type Page, type Locator, expect } from '@playwright/test';
+import { ENV } from '../env';
+
+const APP_HOST = new URL(ENV.BASE_URL()).host;
+const IDP_HOST = new URL(ENV.IDP_BASE_URL()).host;
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+const APP_HOST_PATTERN = new RegExp(escapeRegExp(APP_HOST));
+const IDP_HOST_PATTERN = new RegExp(escapeRegExp(IDP_HOST));
 
 /** Shape of tokens stored in localStorage / sessionStorage */
 export interface AuthTokens {
@@ -27,14 +38,14 @@ export class AppPage {
   async waitForAuthCallback() {
     // After the IdP posts the auth code, the app handles /auth/callback
     // then redirects to the root. Wait for that final navigation.
-    await this.page.waitForURL(/saasbpf\.saas-dev\.mira-pco\.net/, { timeout: 30_000 });
+    await this.page.waitForURL(APP_HOST_PATTERN, { timeout: 30_000 });
     await this.page.waitForLoadState('networkidle');
   }
 
   /** Assert we are back on the SaaS app (not still on the IdP) */
   async assertRedirectedBackToApp() {
-    await expect(this.page).toHaveURL(/saasbpf\.saas-dev\.mira-pco\.net/);
-    await expect(this.page).not.toHaveURL(/integrated-id\.jpn\.panasonic\.com/);
+    await expect(this.page).toHaveURL(APP_HOST_PATTERN);
+    await expect(this.page).not.toHaveURL(IDP_HOST_PATTERN);
   }
 
   /**
